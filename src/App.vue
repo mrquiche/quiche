@@ -1,12 +1,23 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view />
-  </div>
+  <body>
+    <div id="app" class="flexItem">
+      <h1>Mr. Quiche</h1>
+      <search-bar></search-bar>
+      <router-view id="router-view" :key="$route.fullPath"></router-view>
+    </div>
+  </body>
 </template>
+
+<script>
+import SearchBar from "@/components/SearchBar";
+export default {
+  name: "App",
+  components: { SearchBar },
+  created() {
+    this.$store.dispatch("fetchNodes");
+  },
+};
+</script>
 
 <style>
 #app {
@@ -15,18 +26,6 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
+  margin-top: 60px;
 }
 </style>
