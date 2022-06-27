@@ -1,15 +1,14 @@
 <template>
   <nav class="nodeButtons">
     <template v-for="node in $store.state.nodes">
-      <router-link
+      <button
         id="selected"
         class="nodeButton"
         :key="node.pubkey"
-        :to="{ name: 'pubkey', params: { pubkey: node.pubkey } }"
         @click="selectNode(node.pubkey)"
       >
         {{ node.alias }}
-      </router-link>
+      </button>
     </template>
   </nav>
 </template>
@@ -20,6 +19,10 @@ export default {
   methods: {
     selectNode(pubkey) {
       this.$store.dispatch("selectNode", pubkey);
+      this.fetchNode();
+    },
+    fetchNode() {
+      this.$store.dispatch("fetchSelectedNode");
     },
   },
 };

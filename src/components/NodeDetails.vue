@@ -8,9 +8,6 @@
 <script>
 export default {
   name: "NodeDetails",
-  created() {
-    this.$store.dispatch("fetchSelectedNode");
-  },
 };
 </script>
 

@@ -1,33 +1,35 @@
 <template>
   <form method="get" action="">
-    <router-link
-      :to="{
-        name: 'pubkey',
-        params: {
-          name: pubkey,
-        },
-      }"
-    >
+    <div class="search-wrapper">
       <input
         id="searchBar"
-        type="search"
-        name="searchTerm"
-        v-model="pubkey"
+        type="text"
+        v-model="search"
         placeholder="Enter pubkey or alias..."
+        @focusout="selectNode(search)"
       />
-      <input type="submit" value="Search" />
-      <p>Pubkey is: {{ pubkey }}</p>
-    </router-link>
+    </div>
   </form>
 </template>
 
 <script>
 export default {
   name: "SearchBar",
-  data() {
+  data: function () {
     return {
-      pubkey: "",
+      search: "",
     };
+  },
+  methods: {
+    selectNode(pubkey) {
+      if (pubkey.length >= 66) {
+        this.$store.dispatch("selectNode", pubkey);
+        this.fetchNode();
+      }
+    },
+    fetchNode() {
+      this.$store.dispatch("fetchSelectedNode");
+    },
   },
 };
 </script>
