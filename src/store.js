@@ -10,8 +10,12 @@ export default new Vuex.Store({
     selectedNode: {
       pubkey: "",
       alias: "",
+      capacity: "",
+      channelCount: "",
+      lastUpdate: "",
     },
     selectedPubkey: "",
+    selectedAlias: "",
   },
   mutations: {
     SET_NODES(state, newNodes) {
@@ -19,6 +23,9 @@ export default new Vuex.Store({
     },
     SELECT_PUBKEY(state, pubkey) {
       state.selectedPubkey = pubkey;
+    },
+    SELECT_ALIAS(state, alias) {
+      state.selectedAlias = alias;
     },
     SET_SELECTED_NODE(state, selectedNode) {
       state.selectedNode = selectedNode;
@@ -30,11 +37,19 @@ export default new Vuex.Store({
         .then((json) => context.commit("SET_NODES", json))
         .catch((reason) => console.log("Error: " + reason));
     },
-    selectNode(context, pubkey) {
+    selectNodeByPubkey(context, pubkey) {
       context.commit("SELECT_PUBKEY", pubkey);
     },
-    fetchSelectedNode: (context) => {
-      ApiService.fetchSelectedNode(context.state.selectedPubkey)
+    selectNodeByAlias(context, alias) {
+      context.commit("SELECT_ALIAS", alias);
+    },
+    fetchSelectedNodeByPubkey: (context) => {
+      ApiService.fetchSelectedNodeByPubkey(context.state.selectedPubkey)
+        .then((json) => context.commit("SET_SELECTED_NODE", json))
+        .catch((reason) => console.log("Error: " + reason));
+    },
+    fetchSelectedNodeByAlias: (context) => {
+      ApiService.fetchSelectedNodeByAlias(context.state.selectedAlias)
         .then((json) => context.commit("SET_SELECTED_NODE", json))
         .catch((reason) => console.log("Error: " + reason));
     },

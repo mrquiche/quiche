@@ -19,8 +19,21 @@ export default {
         console.log("Error fetching node data: ", reason);
       });
   },
-  fetchSelectedNode(pubkey) {
+  fetchSelectedNodeByPubkey(pubkey) {
     return fetch(apiUrl + "/nodes/" + pubkey)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Network response was not ok");
+      })
+      .catch((reason) => {
+        console.log("Error fetching node data: ", reason);
+      });
+  },
+
+  fetchSelectedNodeByAlias(alias) {
+    return fetch(apiUrl + "/nodes/alias/" + alias)
       .then((response) => {
         if (response.ok) {
           return response.json();

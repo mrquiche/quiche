@@ -1,24 +1,23 @@
 <template>
   <div>
-    <div>
+    <div class="nodeDetailsSection">
       <node-details></node-details>
-    </div>
-    <div>
-      <section class="leftRightSections">
-        <node-nav></node-nav>
-      </section>
     </div>
   </div>
 </template>
 
 <script>
-import NodeNav from "@/components/NodeNav";
 import NodeDetails from "@/components/NodeDetails";
 
 export default {
   name: "HomeView",
-  components: { NodeDetails, NodeNav },
+  components: { NodeDetails },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.nodeDetailsSection {
+  display: flex;
+  align-content: center;
+}
+</style>

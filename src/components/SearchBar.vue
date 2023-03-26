@@ -1,15 +1,16 @@
 <template>
-  <form method="get" action="">
-    <div class="search-wrapper">
+  <div class="searchContainer">
+    <div class="searchBarWrapper">
       <input
         id="searchBar"
         type="text"
         v-model="search"
         placeholder="Enter pubkey or alias..."
-        @focusout="selectNode(search)"
+        @change="selectNode(search)"
       />
     </div>
-  </form>
+    <button class="btn" @click="selectNode(search)">Search</button>
+  </div>
 </template>
 
 <script>
@@ -21,27 +22,74 @@ export default {
     };
   },
   methods: {
-    selectNode(pubkey) {
-      if (pubkey.length >= 66) {
-        this.$store.dispatch("selectNode", pubkey);
-        this.fetchNode();
+    selectNode(searchTerm) {
+      if (searchTerm.length >= 66) {
+        this.$store.dispatch("selectNodeByPubkey", searchTerm);
+        this.fetchNodeByPubkey();
+      } else {
+        this.$store.dispatch("selectNodeByAlias", searchTerm);
+        this.fetchNodeByAlias();
       }
     },
-    fetchNode() {
-      this.$store.dispatch("fetchSelectedNode");
+    fetchNodeByPubkey() {
+      this.$store.dispatch("fetchSelectedNodeByPubkey");
+    },
+    fetchNodeByAlias() {
+      this.$store.dispatch("fetchSelectedNodeByAlias");
     },
   },
 };
 </script>
 
 <style scoped>
-#searchBar {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.btn {
+  display: inline-block;
+  font-weight: 400;
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
   text-align: center;
-  width: 600px;
-  color: #2c3e50;
-  margin-top: 60px;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.searchContainer {
+  max-width: 900px;
+  gap: 10px;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+#searchBar:focus {
+  width: 100%;
+  color: #495057;
+}
+.searchBarWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 1px solid;
+  background-color: white;
+  width: 400px;
+  padding: 8px;
+  border-radius: 8px;
+  transition: border-color 0.6s ease 0s, background-color 0.2s ease 0s;
+}
+#searchBar {
+  width: 100%;
+  background-color: white;
+  padding: 2px;
+  border: none;
+  outline: none;
+  font-size: 14px;
 }
 </style>
