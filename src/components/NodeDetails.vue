@@ -49,7 +49,7 @@ export default {
     formatPubkey() {
       let pubkey, pubkeyLen;
       pubkey = this.$store.state.selectedNode.pubkey;
-      pubkeyLen = this.$store.state.selectedNode.pubkey.length;
+      pubkeyLen = pubkey.length;
       return (
         pubkey.substring(0, 6) +
         "..." +
