@@ -30,6 +30,12 @@ export default new Vuex.Store({
     SET_SELECTED_NODE(state, selectedNode) {
       state.selectedNode = selectedNode;
     },
+    CLEAR_PUBKEY(state) {
+      state.selectedPubkey = "";
+    },
+    CLEAR_ALIAS(state) {
+      state.selectedAlias = "";
+    },
   },
   actions: {
     fetchNodes: (context) => {
@@ -42,6 +48,12 @@ export default new Vuex.Store({
     },
     selectNodeByAlias(context, alias) {
       context.commit("SELECT_ALIAS", alias);
+    },
+    clearPubkey(context) {
+      context.commit("CLEAR_PUBKEY");
+    },
+    clearAlias(context) {
+      context.commit("CLEAR_ALIAS");
     },
     fetchSelectedNodeByPubkey: (context) => {
       ApiService.fetchSelectedNodeByPubkey(context.state.selectedPubkey)
