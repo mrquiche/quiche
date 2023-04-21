@@ -2,18 +2,14 @@
   <div class="body">
     <div class="searchResultContainer" v-if="!noSearch && !searchButNoResult">
       <div id="node">
-        <h1 id="aliasHeading">
+        <h1 class="nodeHeading" v-if="$store.state.selectedNode.alias">
           {{ $store.state.selectedNode.alias }}
         </h1>
+        <h1 class="nodeHeading" v-else>
+          {{ formatPubkey }}
+        </h1>
         <div id="pubkeyText">
-          {{
-            $store.state.selectedNode.pubkey.substring(0, 6) +
-            "..." +
-            $store.state.selectedNode.pubkey.substring(
-              $store.state.selectedNode.pubkey.length - 6,
-              $store.state.selectedNode.pubkey.length
-            )
-          }}
+          {{ formatPubkey }}
         </div>
       </div>
       <div class="nodeGrid">
@@ -50,6 +46,16 @@
 export default {
   name: "NodeDetails",
   computed: {
+    formatPubkey() {
+      let pubkey, pubkeyLen;
+      pubkey = this.$store.state.selectedNode.pubkey;
+      pubkeyLen = this.$store.state.selectedNode.pubkey.length;
+      return (
+        pubkey.substring(0, 6) +
+        "..." +
+        pubkey.substring(pubkeyLen - 6, pubkeyLen)
+      );
+    },
     formatCapacity() {
       return Number(this.$store.state.selectedNode.capacity).toLocaleString();
     },
@@ -96,7 +102,7 @@ export default {
   font-size: 12px;
   margin: 0 0 2px 2px;
 }
-#aliasHeading {
+.nodeHeading {
   font-size: 28px;
   font-weight: bolder;
   margin: 0;

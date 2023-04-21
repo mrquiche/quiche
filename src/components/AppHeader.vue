@@ -32,12 +32,6 @@ header h1 {
   font-size: 36px;
 }
 
-header {
-  float: left;
-  padding: 10px 0 0 10px;
-  width: 50px;
-  height: 50px;
-}
 hr {
   width: 80%;
   border: black solid 1px;
