@@ -24,9 +24,11 @@ export default {
   methods: {
     selectNode(searchTerm) {
       if (searchTerm.length >= 66) {
+        this.$store.dispatch("clearAlias");
         this.$store.dispatch("selectNodeByPubkey", searchTerm);
         this.fetchNodeByPubkey();
       } else {
+        this.$store.dispatch("clearPubkey");
         this.$store.dispatch("selectNodeByAlias", searchTerm);
         this.fetchNodeByAlias();
       }
