@@ -23,7 +23,7 @@
         <div class="basicInfoFieldContainer">
           <div class="basicInfoLabel">Number of Channels</div>
           <div class="basicInfoValue">
-            {{ $store.state.selectedNode.channelCount }}
+            {{ formatChannelCount }}
             <div class="basicInfoUnit">channels</div>
           </div>
         </div>
@@ -55,6 +55,11 @@ export default {
         "..." +
         pubkey.substring(pubkeyLen - 6, pubkeyLen)
       );
+    },
+    formatChannelCount() {
+      return Number(
+        this.$store.state.selectedNode.channelCount
+      ).toLocaleString();
     },
     formatCapacity() {
       return Number(this.$store.state.selectedNode.capacity).toLocaleString();
