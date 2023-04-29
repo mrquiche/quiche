@@ -33,6 +33,48 @@
             {{ $store.state.selectedNode.lastUpdate.substring(0, 10) }}
           </div>
         </div>
+        <div
+          class="basicInfoFieldContainer"
+          v-if="$store.state.selectedNode.degrCenRank"
+        >
+          <div class="basicInfoLabel">Degree Centrality</div>
+          <div class="basicInfoValue">
+            {{
+              getNumberFormattedCommas($store.state.selectedNode.degrCenRank)
+            }}
+            <div class="basicInfoOrdinal">
+              {{ getOrdinalIndicator($store.state.selectedNode.degrCenRank) }}
+            </div>
+          </div>
+        </div>
+        <div
+          class="basicInfoFieldContainer"
+          v-if="$store.state.selectedNode.betwCenRank"
+        >
+          <div class="basicInfoLabel">Betweenness Centrality</div>
+          <div class="basicInfoValue">
+            {{
+              getNumberFormattedCommas($store.state.selectedNode.betwCenRank)
+            }}
+            <div class="basicInfoOrdinal">
+              {{ getOrdinalIndicator($store.state.selectedNode.betwCenRank) }}
+            </div>
+          </div>
+        </div>
+        <div
+          class="basicInfoFieldContainer"
+          v-if="$store.state.selectedNode.closCenRank"
+        >
+          <div class="basicInfoLabel">Closeness Centrality</div>
+          <div class="basicInfoValue">
+            {{
+              getNumberFormattedCommas($store.state.selectedNode.closCenRank)
+            }}
+            <div class="basicInfoOrdinal">
+              {{ getOrdinalIndicator($store.state.selectedNode.closCenRank) }}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div v-else-if="searchButNoResult && !noSearch">
@@ -57,12 +99,14 @@ export default {
       );
     },
     formatChannelCount() {
-      return Number(
+      return this.getNumberFormattedCommas(
         this.$store.state.selectedNode.channelCount
-      ).toLocaleString();
+      );
     },
     formatCapacity() {
-      return Number(this.$store.state.selectedNode.capacity).toLocaleString();
+      return this.getNumberFormattedCommas(
+        this.$store.state.selectedNode.capacity
+      );
     },
     noSearch() {
       return (
@@ -76,6 +120,22 @@ export default {
       aliasNotBlank = !!this.$store.state.selectedAlias;
       nodeUndef = this.$store.state.selectedNode === undefined;
       return (pubKeyNotBlank || aliasNotBlank) && nodeUndef;
+    },
+  },
+  methods: {
+    getNumberFormattedCommas(number) {
+      return Number(number).toLocaleString();
+    },
+    getOrdinalIndicator(number) {
+      const lastDigit = number % 10;
+      const secondLastDigit = Math.floor(number / 10) % 10;
+      return secondLastDigit === 1 || lastDigit === 0 || lastDigit > 3
+        ? "th"
+        : lastDigit === 1
+        ? "st"
+        : lastDigit === 2
+        ? "nd"
+        : "rd";
     },
   },
 };
@@ -104,6 +164,10 @@ export default {
   align-items: flex-end;
 }
 .basicInfoUnit {
+  font-size: 12px;
+  margin: 0 0 2px 2px;
+}
+.basicInfoOrdinal {
   font-size: 12px;
   margin: 0 0 2px 2px;
 }
